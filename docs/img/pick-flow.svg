@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 560" width="920" height="560" role="img" aria-labelledby="t d">
+  <title id="t">How jumplane makes a pick</title>
+  <desc id="d">Flow diagram. 1: the caller passes size, risk and complexity. 2: a fixed table gives a class, raised to the rules' minimum class. 3: jumplane checks each lane of that class in rules order: verified for its model, pool not held, every window in the rules read, and every stored reading, including windows the rules do not list, under the hold line or, for a local lane, model listed at the last probe. Readings from the Claude Code status line, the Codex session log and the Ollama probe feed step 3. The first open lane is returned with its launch command; the caller runs it and reports. If no lane is open the answer is wait, when at least one lane has only blockers with a known end, or unavailable with fix commands. Every outcome is appended to events.jsonl.</desc>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#3b3a36"/>
+    </marker>
+  </defs>
+  <style>
+    .bg { fill: #ffffff; }
+    .box { fill: #f4f2ec; stroke: #3b3a36; stroke-width: 1.5; }
+    .in { fill: #eef5f6; stroke: #0b5d6b; stroke-width: 1.5; }
+    .no { fill: #ffffff; stroke: #3b3a36; stroke-width: 1.5; stroke-dasharray: 6 4; }
+    .h { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 15px; font-weight: 600; fill: #1c1b19; }
+    .s { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 13px; fill: #3b3a36; }
+    .m { font-family: ui-monospace, "Cascadia Mono", Consolas, Menlo, monospace; font-size: 12.5px; fill: #3b3a36; }
+    .l { stroke: #3b3a36; stroke-width: 1.5; fill: none; marker-end: url(#a); }
+    .lab { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 12.5px; fill: #1c1b19; font-style: italic; }
+  </style>
+  <rect class="bg" x="0" y="0" width="920" height="560" rx="10"/>
+
+  <rect class="box" x="20" y="30" width="200" height="110" rx="8"/>
+  <text class="h" x="34" y="56">1. Task shape</text>
+  <text class="s" x="34" y="80">size, risk, complexity,</text>
+  <text class="s" x="34" y="98">stated by the caller;</text>
+  <text class="s" x="34" y="116">missing means medium</text>
+
+  <path class="l" d="M220,85 L254,85"/>
+
+  <rect class="box" x="256" y="30" width="210" height="110" rx="8"/>
+  <text class="h" x="270" y="56">2. Class</text>
+  <text class="s" x="270" y="80">light, standard or strong</text>
+  <text class="s" x="270" y="98">from a fixed table, raised</text>
+  <text class="s" x="270" y="116">to the rules' minimum_class</text>
+
+  <path class="l" d="M466,85 L500,85"/>
+
+  <rect class="box" x="502" y="30" width="398" height="150" rx="8"/>
+  <text class="h" x="516" y="56">3. Each lane of that class, in rules order</text>
+  <text class="s" x="516" y="82">a. verified for its model (jumplane verify)?</text>
+  <text class="s" x="516" y="104">b. pool not held?</text>
+  <text class="s" x="516" y="126">c. each window in the rules read, and every reading,</text>
+  <text class="s" x="530" y="144">listed or not, under hold_at_percent with</text>
+  <text class="s" x="530" y="162">reservations? (local lane: model at last probe)</text>
+
+  <rect class="in" x="20" y="200" width="446" height="118" rx="8"/>
+  <text class="h" x="34" y="226">Readings and holds, inputs to step 3</text>
+  <text class="s" x="34" y="250">Claude Code status line: 5-hour and 7-day percent used</text>
+  <text class="s" x="34" y="270">Codex session log: percent per window (undocumented format)</text>
+  <text class="s" x="34" y="290">Ollama: models listed when jumplane init ran</text>
+  <text class="s" x="34" y="310">Holds: jumplane hold, or a report of limit_hit</text>
+  <path class="l" d="M466,215 L484,215 L484,150 L500,150"/>
+
+  <path class="l" d="M610,180 L610,226"/>
+  <text class="lab" x="618" y="208">first open lane</text>
+  <path class="l" d="M820,180 L820,226"/>
+  <text class="lab" x="828" y="208">none open</text>
+
+  <rect class="box" x="502" y="228" width="196" height="96" rx="8"/>
+  <text class="h" x="514" y="252">Picked</text>
+  <text class="s" x="514" y="274">lane, model, effort,</text>
+  <text class="s" x="514" y="292">launch command, reason,</text>
+  <text class="s" x="514" y="310">skipped lanes; exit 0</text>
+
+  <rect class="no" x="712" y="228" width="188" height="130" rx="8"/>
+  <text class="h" x="724" y="252">Wait or unavailable</text>
+  <text class="s" x="724" y="274">wait (exit 3): a lane</text>
+  <text class="s" x="724" y="292">reopens at a known time</text>
+  <text class="s" x="724" y="314">unavailable (exit 4):</text>
+  <text class="s" x="724" y="332">fix commands; no lane is</text>
+  <text class="s" x="724" y="350">borrowed from another class</text>
+
+  <path class="l" d="M600,324 L600,374"/>
+
+  <rect class="box" x="502" y="376" width="196" height="76" rx="8"/>
+  <text class="h" x="514" y="400">4. Caller runs it</text>
+  <text class="s" x="514" y="420">stdin closed, then</text>
+  <text class="m" x="514" y="440">jumplane report</text>
+
+  <rect class="box" x="20" y="480" width="880" height="60" rx="8"/>
+  <text class="h" x="34" y="506">5. events.jsonl</text>
+  <text class="s" x="34" y="526">one JSON line per pick, wait, unavailable, report, override, hold, release, hand reading and verify</text>
+  <path class="l" d="M600,452 L600,478"/>
+  <path class="l" d="M806,358 L806,478"/>
+  <text class="lab" x="34" y="350">Solid boxes: built and tested.</text>
+  <text class="lab" x="34" y="370">Dashed box: built; the refusal path.</text>
+  <text class="lab" x="34" y="390">Not shown: signing the rules file (not built).</text>
+</svg>

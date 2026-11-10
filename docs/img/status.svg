@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 520" width="920" height="520" role="img" aria-labelledby="t d">
+  <title id="t">jumplane status and pick, recorded 10 Nov 2026</title>
+  <desc id="d">Terminal capture. jumplane status shows the Claude weekly window at 15 percent, read 2 days 11 hours earlier, and the Codex weekly window at 3 percent. With the hold line set to 10 percent, the next standard lane is codex-standard. The pick for a medium task returns codex-standard and lists claude-standard as passed over, with two reasons: no valid five-hour reading, and 15 percent used against a 10 percent hold line.</desc>
+  <style>
+    .bg { fill: #14181b; }
+    .t { font-family: ui-monospace, "Cascadia Mono", Consolas, Menlo, monospace; font-size: 14px; fill: #dfe6e3; white-space: pre; }
+    .p { fill: #7fd1a3; }
+    .dim { fill: #8d9794; }
+    .note { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 13px; fill: #e8c26a; }
+    .mark { fill: none; stroke: #e8c26a; stroke-width: 1.5; }
+  </style>
+  <rect class="bg" x="0" y="0" width="920" height="520" rx="10"/>
+  <text class="t" x="20" y="34"><tspan class="p">$</tspan> jumplane status</text>
+  <text class="t" x="20" y="56">ollama  local, 6 models at last probe</text>
+  <text class="t" x="20" y="76">claude  300m 3% reset passed read 2d11h ago (statusline)</text>
+  <text class="t" x="20" y="96">claude  10080m 15% resets 9h55m read 2d11h ago (statusline)</text>
+  <text class="t" x="20" y="116">codex  10080m 3% resets 1d2h read 11h37m ago (codex-log)</text>
+  <text class="t" x="20" y="148">light: next ollama-light (qwen3.5:9b)</text>
+  <text class="t" x="20" y="168">standard: next codex-standard (gpt-6.1-terra)</text>
+  <text class="t" x="20" y="188">strong: next codex-strong (gpt-6.1-sol)</text>
+  <rect class="mark" x="14" y="81" width="530" height="21" rx="3"/>
+  <text class="note" x="556" y="96">A: 15% used, over the 10% hold line</text>
+  <rect class="mark" x="14" y="153" width="400" height="21" rx="3"/>
+  <text class="note" x="426" y="168">B: standard work goes to Codex</text>
+
+  <text class="t" x="20" y="232"><tspan class="p">$</tspan> jumplane pick --size medium</text>
+  <text class="t dim" x="20" y="254">{   (excerpt of the JSON answer)</text>
+  <text class="t" x="20" y="274"> "status": "picked",</text>
+  <text class="t" x="20" y="294"> "lane": "codex-standard",</text>
+  <text class="t" x="20" y="314"> "reason": "medium size, medium risk, medium complexity gives class standard;</text>
+  <text class="t" x="20" y="334">            passed over claude-standard",</text>
+  <text class="t" x="20" y="354"> "stdin": "closed",</text>
+  <text class="t" x="20" y="374"> "skipped": [ { "lane": "claude-standard", "reasons": [</text>
+  <text class="t" x="20" y="394">    "pool claude has no valid reading for its 300 minute window",</text>
+  <text class="t" x="20" y="414">    "pool claude at 15% of its 10080 minute window, holds at 10%"</text>
+  <rect class="mark" x="14" y="399" width="540" height="21" rx="3"/>
+  <text class="note" x="566" y="414">C: the hold, as a reason</text>
+  <text class="t dim" x="20" y="446">The returned codex command then ran with stdin closed: exit 0 after 6 s, 5,130 tokens,</text>
+  <text class="t dim" x="20" y="466">reported as done.</text>
+  <text class="note" x="20" y="500" style="fill:#8d9794">Windows 11, jumplane 0.1.0.dev0 at commit 4bb382c, 10 Nov 2026 07:04 UTC. Rules copy with hold_at_percent 10.</text>
+</svg>

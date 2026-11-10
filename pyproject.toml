@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "jumplane"
+version = "0.1.0"
+description = "Picks the model and effort for a task from your rules, and moves to the next open lane before a usage limit."
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.11"
+dependencies = []
+
+[project.scripts]
+jumplane = "jumplane.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
