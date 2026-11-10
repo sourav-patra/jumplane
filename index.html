@@ -1,0 +1,220 @@
+<!doctype html>
+<!-- jumplane product page. One file: inline CSS and SVG, no scripts, fonts, images or trackers, so opening it makes no network request. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>jumplane: pick the model for a task from your own rules</title>
+<meta name="description" content="jumplane picks the tool, model and effort for a task from a rules file you accept, and moves to the next open lane before a usage limit. Pre-release.">
+<style>
+  :root { --bg:#fbfaf7; --fg:#1c1b19; --mut:#5d5a54; --line:#d9d5cc; --card:#ffffff; --acc:#0b5d6b; --term:#14181b; --termfg:#dfe6e3; --ok:#7fd1a3; --warn:#e8c26a; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#141516; --fg:#ecebe7; --mut:#a6a39b; --line:#34363a; --card:#1c1e20; --acc:#7cc7d4; --term:#0c0e10; --termfg:#dfe6e3; }
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg); font:17px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  figure svg { max-width: 100%; height: auto; display: block; }
+  main { max-width: 860px; margin: 0 auto; padding: 40px 20px 72px; }
+  h1 { font-size: 2.5rem; line-height:1.1; margin: 0 0 10px; letter-spacing: -0.02em; }
+  h2 { font-size: 1.35rem; margin: 52px 0 12px; padding-top: 18px; border-top: 1px solid var(--line); }
+  p { margin: 0 0 14px; }
+  .promise { font-size: 1.25rem; max-width: 40em; }
+  .status { display:inline-block; border:1px solid var(--line); border-radius: 999px; padding: 2px 12px; font-size: .85rem; color: var(--mut); margin-bottom: 18px; }
+  a { color: var(--acc); }
+  code, pre { font-family: ui-monospace, "Cascadia Mono", Consolas, Menlo, monospace; font-size: .86rem; }
+  code { background: color-mix(in srgb, var(--line) 45%, transparent); padding: 1px 5px; border-radius: 4px; }
+  figure { margin: 26px 0; }
+  figcaption { color: var(--mut); font-size: .88rem; margin-top: 8px; }
+  .term { background: var(--term); color: var(--termfg); border-radius: 10px; padding: 16px 18px; overflow-x: auto; line-height: 1.45; margin:0; }
+  .term code { background:none; padding:0; }
+  .term .p { color: var(--ok); } .term .n { color: var(--warn); } .term .d { color:#8d9794; }
+  ul { padding-left: 1.15em; margin: 0 0 14px; } li { margin-bottom: 7px; }
+  ol { padding-left: 1.3em; } ol li { margin-bottom: 12px; }
+  table { border-collapse: collapse; width: 100%; font-size: .9rem; margin: 10px 0 8px; display:block; overflow-x:auto; }
+  th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--mut); font-weight: 600; }
+  .grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin: 18px 0; }
+  .num { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+  .num b { display:block; font-size: 1.7rem; line-height:1.15; }
+  .num span { color: var(--mut); font-size: .84rem; }
+  .note { border-left: 3px solid var(--acc); padding: 4px 0 4px 14px; color: var(--mut); }
+  svg text { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; fill: currentColor; }
+  footer { margin-top: 56px; color: var(--mut); font-size: .85rem; border-top:1px solid var(--line); padding-top:16px; }
+</style>
+</head>
+<body>
+<main>
+
+<span class="status">Pre-release v0.1.0, 10 Nov 2026. MIT licence.</span>
+<h1>jumplane</h1>
+<p class="promise">Tell jumplane how big and how risky a task is. It answers with the tool, model, effort and exact command to run, taken from rules you accepted, and it moves to the next open lane before a usage limit stops you.</p>
+
+<figure>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 520" width="920" height="520" role="img" aria-labelledby="t d">
+  <title id="t">jumplane status and pick, recorded 10 Nov 2026</title>
+  <desc id="d">Terminal capture. jumplane status shows the Claude weekly window at 15 percent, read 2 days 11 hours earlier, and the Codex weekly window at 3 percent. With the hold line set to 10 percent, the next standard lane is codex-standard. The pick for a medium task returns codex-standard and lists claude-standard as passed over, with two reasons: no valid five-hour reading, and 15 percent used against a 10 percent hold line.</desc>
+  <style>
+    .bg { fill: #14181b; }
+    .t { font-family: ui-monospace, "Cascadia Mono", Consolas, Menlo, monospace; font-size: 14px; fill: #dfe6e3; white-space: pre; }
+    .p { fill: #7fd1a3; }
+    .dim { fill: #8d9794; }
+    .note { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: 13px; fill: #e8c26a; }
+    .mark { fill: none; stroke: #e8c26a; stroke-width: 1.5; }
+  </style>
+  <rect class="bg" x="0" y="0" width="920" height="520" rx="10"/>
+  <text class="t" x="20" y="34"><tspan class="p">$</tspan> jumplane status</text>
+  <text class="t" x="20" y="56">ollama  local, 6 models at last probe</text>
+  <text class="t" x="20" y="76">claude  300m 3% reset passed read 2d11h ago (statusline)</text>
+  <text class="t" x="20" y="96">claude  10080m 15% resets 9h55m read 2d11h ago (statusline)</text>
+  <text class="t" x="20" y="116">codex  10080m 3% resets 1d2h read 11h37m ago (codex-log)</text>
+  <text class="t" x="20" y="148">light: next ollama-light (qwen3.5:9b)</text>
+  <text class="t" x="20" y="168">standard: next codex-standard (gpt-6.1-terra)</text>
+  <text class="t" x="20" y="188">strong: next codex-strong (gpt-6.1-sol)</text>
+  <rect class="mark" x="14" y="81" width="530" height="21" rx="3"/>
+  <text class="note" x="556" y="96">A: 15% used, over the 10% hold line</text>
+  <rect class="mark" x="14" y="153" width="400" height="21" rx="3"/>
+  <text class="note" x="426" y="168">B: standard work goes to Codex</text>
+
+  <text class="t" x="20" y="232"><tspan class="p">$</tspan> jumplane pick --size medium</text>
+  <text class="t dim" x="20" y="254">{   (excerpt of the JSON answer)</text>
+  <text class="t" x="20" y="274"> "status": "picked",</text>
+  <text class="t" x="20" y="294"> "lane": "codex-standard",</text>
+  <text class="t" x="20" y="314"> "reason": "medium size, medium risk, medium complexity gives class standard;</text>
+  <text class="t" x="20" y="334">            passed over claude-standard",</text>
+  <text class="t" x="20" y="354"> "stdin": "closed",</text>
+  <text class="t" x="20" y="374"> "skipped": [ { "lane": "claude-standard", "reasons": [</text>
+  <text class="t" x="20" y="394">    "pool claude has no valid reading for its 300 minute window",</text>
+  <text class="t" x="20" y="414">    "pool claude at 15% of its 10080 minute window, holds at 10%"</text>
+  <rect class="mark" x="14" y="399" width="540" height="21" rx="3"/>
+  <text class="note" x="566" y="414">C: the hold, as a reason</text>
+  <text class="t dim" x="20" y="446">The returned codex command then ran with stdin closed: exit 0 after 6 s, 5,130 tokens,</text>
+  <text class="t dim" x="20" y="466">reported as done.</text>
+  <text class="note" x="20" y="500" style="fill:#8d9794">Windows 11, jumplane 0.1.0.dev0 at commit 4bb382c, 10 Nov 2026 07:04 UTC. Rules copy with hold_at_percent 10.</text>
+</svg>
+<figcaption>Figure 1. A recorded hold and move, 10 Nov 2026, commit 4bb382c, with the hold line set to 10% in a copy of the rules. Claude stood at 15% (A), so standard work went to Codex (B), and the pick gave the hold as its reason (C). Limits: one session on one Windows PC; JSON cut, one line wrapped.</figcaption>
+</figure>
+
+<h2>Why</h2>
+<p>Coding agents on a subscription stop when a usage window fills, and the host does not switch for you. Claude Code's <a href="https://code.claude.com/docs/en/model-config">model configuration page</a> says rate-limit errors "never trigger a switch" to its fallback model.</p>
+<p class="note">Evidence: the phrase "usage limit" appears in 3,575 issues on the Claude Code repository and 1,975 on the Codex repository (GitHub issue search, 3 Nov 2026; the totals include off-topic hits). One of them, <a href="https://github.com/anthropics/claude-code/issues/16157">claude-code issue 16157</a>, had 727 reactions that day.</p>
+<p>jumplane is not a proxy and holds no keys. It reads the limit numbers your tools already show, and it returns a command for you or your agent to run.</p>
+
+<h2>Features</h2>
+<ul>
+  <li>One screen, <code>jumplane status</code>: each pool, percent used, reset time, age of the reading, holds, and the lane that runs next.</li>
+  <li><code>jumplane pick</code> maps size, risk and complexity to one of three classes with a published table, then returns the first open lane in your order.</li>
+  <li>A pool at the hold line (90 percent by default) on any window with a valid reading is passed over, and the pick moves to the next lane in the same class.</li>
+  <li>Every lane passed over is listed under <code>skipped</code> with its cause and the command that would open it. An unverified lane is passed over for the next lane in the same class; work never moves to another class.</li>
+  <li><code>jumplane report</code> records the outcome, tokens and receipt path. Each decision is one line in a plain log file you can read.</li>
+  <li>No proxy, no API keys, no prompt reading, no telemetry. <code>pick</code> opens no socket: only the probe used by <code>init</code> and <code>verify</code> may import network modules, which a test checks. Python standard library only.</li>
+  <li>Rules and code choose the route, and model output never does.</li>
+</ul>
+
+<div class="grid">
+  <div class="num"><b>78</b><span>tests pass on one Windows 11 PC, 10 Nov 2026 (command below)</span></div>
+  <div class="num"><b>0</b><span>runtime dependencies (<code>dependencies = []</code>, enforced by a test)</span></div>
+  <div class="num"><b>3</b><span>hosts with a launch command: Claude Code, Codex, Ollama</span></div>
+</div>
+<p>Test command, from the repository root: <code>PYTHONPATH=src python -m unittest discover -s tests -t .</code></p>
+
+<h2>How it works</h2>
+<figure>
+<svg viewBox="0 0 820 300" role="img" aria-labelledby="f2t f2d" width="100%" style="color:var(--fg)">
+  <title id="f2t">How a pick is made</title>
+  <desc id="f2d">The caller passes a task shape. A fixed table turns it into a class. jumplane walks the lanes of that class in the owner's order and checks each one: verified, not held, reading under the hold line. The first open lane is returned with its launch command. If none is open the answer is wait or unavailable with fix commands. The caller reports the outcome and every step is appended to an event log.</desc>
+  <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker></defs>
+  <g fill="none" stroke="currentColor" stroke-width="1.5">
+    <rect x="10" y="40" width="150" height="84" rx="8"/>
+    <rect x="200" y="40" width="150" height="84" rx="8"/>
+    <rect x="390" y="40" width="190" height="84" rx="8"/>
+    <rect x="620" y="20" width="190" height="56" rx="8" stroke-dasharray="6 4"/>
+    <rect x="620" y="92" width="190" height="56" rx="8"/>
+    <rect x="390" y="200" width="190" height="64" rx="8"/>
+    <rect x="620" y="200" width="190" height="64" rx="8"/>
+    <rect x="10" y="200" width="340" height="64" rx="8"/>
+    <path d="M160 82 H198" marker-end="url(#a)"/>
+    <path d="M350 82 H388" marker-end="url(#a)"/>
+    <path d="M580 68 L618 50" marker-end="url(#a)"/>
+    <path d="M580 96 L618 118" marker-end="url(#a)"/>
+    <path d="M715 148 V198" marker-end="url(#a)"/>
+    <path d="M620 232 H582" marker-end="url(#a)"/>
+    <path d="M180 200 V150 H440 V126" marker-end="url(#a)"/>
+  </g>
+  <g font-size="13">
+    <text x="85" y="66" text-anchor="middle" font-weight="600">1. Task shape</text>
+    <text x="85" y="86" text-anchor="middle">size, risk,</text>
+    <text x="85" y="104" text-anchor="middle">complexity</text>
+    <text x="275" y="66" text-anchor="middle" font-weight="600">2. Class</text>
+    <text x="275" y="86" text-anchor="middle">light, standard</text>
+    <text x="275" y="104" text-anchor="middle">or strong (fixed table)</text>
+    <text x="485" y="62" text-anchor="middle" font-weight="600">3. Lanes in your order</text>
+    <text x="485" y="82" text-anchor="middle">verified? not held?</text>
+    <text x="485" y="100" text-anchor="middle">reading under hold line?</text>
+    <text x="715" y="44" text-anchor="middle" font-weight="600">None open</text>
+    <text x="715" y="62" text-anchor="middle">wait or fix commands</text>
+    <text x="715" y="116" text-anchor="middle" font-weight="600">Open lane found</text>
+    <text x="715" y="134" text-anchor="middle">lane + launch command</text>
+    <text x="715" y="228" text-anchor="middle" font-weight="600">4. You run it, then</text>
+    <text x="715" y="246" text-anchor="middle">report the outcome</text>
+    <text x="485" y="228" text-anchor="middle" font-weight="600">5. Event log</text>
+    <text x="485" y="246" text-anchor="middle">one JSON line per step</text>
+    <text x="180" y="228" text-anchor="middle" font-weight="600">Readings (inputs to step 3)</text>
+    <text x="180" y="246" text-anchor="middle">Claude status line, Codex log, Ollama probe</text>
+  </g>
+</svg>
+<figcaption>Figure 2. How a pick is made. Solid boxes are built and tested. The dashed box is also built; it is dashed because it is the refusal path. Left out: signing of the rules file, which is planned and not built.</figcaption>
+</figure>
+
+<h2>Quick start</h2>
+<ol>
+  <li>Install <a href="https://docs.astral.sh/uv/">uv</a>, then jumplane from its tag: <code>uv tool install git+https://github.com/sourav-patra/jumplane@v0.1.0</code>. Check: <code>jumplane --version</code> prints <code>0.1.0</code>.</li>
+  <li>Run <code>jumplane init</code>. It looks for Claude Code, Codex and a local Ollama server and prints proposed rules without writing them. Check: the answer says <code>"status": "proposed"</code>.</li>
+  <li>Read the rules, then run <code>jumplane init --accept</code>. Check: the answer says <code>"status": "accepted"</code>.</li>
+  <li>Verify each hosted route once, for example <code>jumplane verify codex-standard</code>. This sends one short prompt and uses a little of that plan. Check: <code>"status": "verified"</code>.</li>
+  <li>Run <code>jumplane status</code>. Check: each class shows <code>next</code> and a lane, or a <code>fix:</code> line to run.</li>
+  <li>Run <code>jumplane pick --size small --risk low --complexity low</code>, launch the returned command, then <code>jumplane report &lt;pick_id&gt; done</code>. Check: the answer says <code>"status": "recorded"</code>.</li>
+</ol>
+<p>Claude Code shows its limits only through its status line. <code>jumplane init</code> prints the one settings line to add. Without it the Claude pool has no reading and stays unavailable.</p>
+
+<h2>Open-weight models</h2>
+<p>jumplane routes to any model your local Ollama server lists. Dense and mixture-of-experts models are launched the same way, because jumplane starts <code>ollama run</code> and does not load weights itself. The table lists the models launched through jumplane on one PC (RTX 4070 Super, 12 GB) on 10 Nov 2026.</p>
+<table>
+  <thead><tr><th>Ollama tag</th><th>Kind, from the publisher's card</th><th>Publisher's own score</th><th>Launch check through jumplane</th></tr></thead>
+  <tbody>
+    <tr><td><code>qwen3.5:9b</code></td><td>9B. The card does not say dense or mixture-of-experts for this size</td><td>LiveCodeBench v6: 65.6 (<a href="https://huggingface.co/Qwen/Qwen3.5-9B">card</a>)</td><td>Verified, 24 s</td></tr>
+    <tr><td><code>gemma4:12b</code></td><td>Dense, 11.95B</td><td>LiveCodeBench v6: 72.0% (<a href="https://huggingface.co/google/gemma-4-12b-it">card</a>)</td><td>Verified, 19 s</td></tr>
+    <tr><td><code>gpt-oss:20b</code></td><td>Mixture-of-experts, 21B with 3.6B active</td><td>SWE-bench Verified: 53.2 at medium reasoning (<a href="https://huggingface.co/openai/gpt-oss-20b">card</a>)</td><td>Verified, 22 s</td></tr>
+    <tr><td><code>qwen3.8:27b</code></td><td>Dense, 27B</td><td>LiveCodeBench v6: 90.3 (<a href="https://huggingface.co/Qwen/Qwen3.8-27B">card</a>)</td><td>Verified, 53 s</td></tr>
+    <tr><td><code>qwen3.6:35b-a3b</code> (4-bit build)</td><td>Mixture-of-experts, 35B with 3B active</td><td>SWE-bench Verified: 73.4 (<a href="https://huggingface.co/Qwen/Qwen3.6-35B-A3B">card</a>)</td><td>Verified, 38 s</td></tr>
+  </tbody>
+</table>
+<p class="note">Read the scores with care. Each one is the publisher's own figure for the full-precision model. jumplane has not reproduced any of them, and a 4-bit local build can score lower. "Verified" means the model answered one short prompt when launched by <code>jumplane verify</code>. It says nothing about quality. <code>init</code> writes one local lane; more local lanes are added by editing the rules file.</p>
+
+<h2>Status and limits</h2>
+<table>
+  <thead><tr><th>Built and tested</th><th>Not built</th><th>Not measured</th></tr></thead>
+  <tbody><tr>
+    <td><code>init</code>, <code>verify</code>, <code>pick</code>, <code>report</code>, <code>override</code>, <code>hold</code>, <code>release</code>, <code>status</code>, <code>statusline</code>, <code>reading</code>; Claude status line reader; Codex log reader; local Ollama pool</td>
+    <td>Signed rules; MCP server; OpenCode; metered API budgets in money; a tuning command that proposes rule changes from your outcomes; an audit summary command; any chat or desktop surface for people who do not use a terminal</td>
+    <td>Whether a jumplane pick beats the host default on quality, cost or completed work. No benchmark has run. Setup time for a new user. Behaviour on macOS and Linux (tests ran on Windows only)</td>
+  </tr></tbody>
+</table>
+<ul>
+  <li>jumplane is rule based. It does not predict quality.</li>
+  <li>The Codex reader rests on an undocumented log format. Any surprise there means "no reading", and the pool is then unavailable until you record one.</li>
+  <li>The caller states the task shape. A caller can understate it down to the minimum class your rules set.</li>
+  <li>jumplane does not stop two callers from running the same work, and it cannot switch a session that is already running.</li>
+  <li>The event log is a plain file. Anyone with your user account can edit it.</li>
+</ul>
+
+<h2>Sponsor</h2>
+<p>Sponsorship is not open yet. When it opens, the first money goes to the benchmark: the same task set run with and without jumplane on paid plans, with the task list, commands and raw results published whether or not they favour jumplane.</p>
+<p>If your company makes a local-model runtime, a coding agent or a usage tool and wants that result to exist, watch the repository once it is public. A sponsor link will appear here only after the profile behind it is approved.</p>
+
+<footer>
+  <p>MIT licence. Figures on this page come from one PC and one day; each states its date and command or source. Not checked: an independent reader has not yet reviewed this page, and the publisher scores were read from the linked cards through an automated summary on 10 Nov 2026.</p>
+</footer>
+
+</main>
+</body>
+</html>
