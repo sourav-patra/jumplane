@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>jumplane: pick the model for a task from your own rules</title>
-<meta name="description" content="jumplane picks the tool, model and effort for a task from a rules file you accept, and moves to the next open lane before a usage limit. Pre-release.">
+<meta name="description" content="jumplane picks the tool, model and effort for a task from a rules file you accept, and returns the next open lane when a usage limit is close. Pre-release.">
 <style>
   :root { --bg:#fbfaf7; --fg:#1c1b19; --mut:#5d5a54; --line:#d9d5cc; --card:#ffffff; --acc:#0b5d6b; --term:#14181b; --termfg:#dfe6e3; --ok:#7fd1a3; --warn:#e8c26a; }
   @media (prefers-color-scheme: dark) {
@@ -47,7 +47,7 @@
 
 <span class="status">Pre-release v0.1.0, 10 Nov 2026. MIT licence.</span>
 <h1>jumplane</h1>
-<p class="promise">Tell jumplane how big and how risky a task is. It answers with the tool, model, effort and exact command to run, taken from rules you accepted, and it moves to the next open lane before a usage limit stops you.</p>
+<p class="promise">Tell jumplane how big and how risky a task is. It answers with the tool, model, effort and exact command to run, taken from rules you accepted. When a usage limit is close, it answers with the next open lane instead.</p>
 
 <figure>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 520" width="920" height="520" role="img" aria-labelledby="t d">
@@ -91,7 +91,7 @@
   <text class="t dim" x="20" y="466">reported as done.</text>
   <text class="note" x="20" y="500" style="fill:#8d9794">Windows 11, jumplane 0.1.0.dev0 at commit 4bb382c, 10 Nov 2026 07:04 UTC. Rules copy with hold_at_percent 10.</text>
 </svg>
-<figcaption>Figure 1. A recorded hold and move, 10 Nov 2026, commit 4bb382c, with the hold line set to 10% in a copy of the rules. Claude stood at 15% (A), so standard work went to Codex (B), and the pick gave the hold as its reason (C). Limits: one session on one Windows PC; JSON cut, one line wrapped.</figcaption>
+<figcaption>Figure 1. Hold and move, 10 Nov 2026; hold line 10% in a rules copy. Claude's 7-day window read 15%, 2 days 11 hours old (A), so standard work went to Codex (B). The pick gave two reasons (C): over the line, no valid 5-hour reading. Limits: one PC, build 0.1.0.dev0 at 4bb382c; JSON shortened, one line wrapped.</figcaption>
 </figure>
 
 <h2>Why</h2>
@@ -104,9 +104,9 @@
   <li>One screen, <code>jumplane status</code>: each pool, percent used, reset time, age of the reading, holds, and the lane that runs next.</li>
   <li><code>jumplane pick</code> maps size, risk and complexity to one of three classes with a published table, then returns the first open lane in your order.</li>
   <li>A pool at the hold line (90 percent by default) on any window with a valid reading is passed over, and the pick moves to the next lane in the same class.</li>
-  <li>Every lane passed over is listed under <code>skipped</code> with its cause and the command that would open it. An unverified lane is passed over for the next lane in the same class; work never moves to another class.</li>
+  <li>Every lane passed over is listed under <code>skipped</code> with its cause and the command or wait that would open it. An unverified lane is passed over for the next lane in the same class; work never moves to another class.</li>
   <li><code>jumplane report</code> records the outcome, tokens and receipt path. Each decision is one line in a plain log file you can read.</li>
-  <li>No proxy, no API keys, no prompt reading, no telemetry. <code>pick</code> opens no socket: only the probe used by <code>init</code> and <code>verify</code> may import network modules, which a test checks. Python standard library only.</li>
+  <li>No proxy, no API keys, no prompt reading, no telemetry. The pick code has no network or process imports. Only the probe used by <code>init</code> and <code>verify</code> imports those modules directly, which a test checks. Python standard library only.</li>
   <li>Rules and code choose the route, and model output never does.</li>
 </ul>
 
