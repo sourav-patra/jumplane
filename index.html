@@ -45,7 +45,7 @@
 <body>
 <main>
 
-<span class="status">Pre-release v0.1.0, 10 Nov 2026. MIT licence.</span>
+<span class="status">Pre-release v0.1.1 on PyPI, 11 Nov 2026. MIT licence.</span>
 <h1>jumplane</h1>
 <p class="promise">Tell jumplane how big and how risky a task is. It answers with the tool, model, effort and exact command to run, taken from rules you accepted. When a usage limit is close, it answers with the next open lane instead.</p>
 
@@ -167,7 +167,7 @@
 
 <h2>Quick start</h2>
 <ol>
-  <li>Install <a href="https://docs.astral.sh/uv/">uv</a>, then jumplane from its tag: <code>uv tool install git+https://github.com/sourav-patra/jumplane@v0.1.0</code>. Check: <code>jumplane --version</code> prints <code>0.1.0</code>.</li>
+  <li>Install <a href="https://docs.astral.sh/uv/">uv</a>, then jumplane from PyPI: <code>uv tool install jumplane</code>. Check: <code>jumplane --version</code> prints <code>0.1.1</code>.</li>
   <li>Run <code>jumplane init</code>. It looks for Claude Code, Codex and a local Ollama server and prints proposed rules without writing them. Check: the answer says <code>"status": "proposed"</code>.</li>
   <li>Read the rules, then run <code>jumplane init --accept</code>. Check: the answer says <code>"status": "accepted"</code>.</li>
   <li>Verify each hosted route once, for example <code>jumplane verify codex-standard</code>. This sends one short prompt and uses a little of that plan. Check: <code>"status": "verified"</code>.</li>
