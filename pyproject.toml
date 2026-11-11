@@ -1,15 +1,35 @@
 [build-system]
-requires = ["setuptools>=68"]
+requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "jumplane"
-version = "0.1.0"
-description = "Picks the model and effort for a task from your rules, and moves to the next open lane before a usage limit."
+version = "0.1.1"
+description = "Picks the tool, model and effort for a coding task from rules you accepted, and returns another lane when a usage limit is close."
 readme = "README.md"
-license = { file = "LICENSE" }
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Sourav Patra" }]
 requires-python = ">=3.11"
 dependencies = []
+keywords = ["claude-code", "codex", "ollama", "llm", "model-routing", "rate-limits", "cli"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development",
+]
+
+[project.urls]
+Homepage = "https://sourav-patra.github.io/jumplane/"
+Source = "https://github.com/sourav-patra/jumplane"
+Issues = "https://github.com/sourav-patra/jumplane/issues"
+Changelog = "https://github.com/sourav-patra/jumplane/releases"
 
 [project.scripts]
 jumplane = "jumplane.cli:main"

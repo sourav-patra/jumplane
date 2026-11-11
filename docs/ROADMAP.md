@@ -1,6 +1,6 @@
 # Roadmap
 
-Status on 2026-11-10: pre-release on branch `jumplane/first-release`. Nothing is published.
+Status on 2026-11-11: `v0.1.0` is public as a pre-release on GitHub, installed from its git tag. `v0.1.1` adds the PyPI package.
 
 ## First public release
 
@@ -10,12 +10,10 @@ Status on 2026-11-10: pre-release on branch `jumplane/first-release`. Nothing is
 | 2 | Claude status line reader, Codex log reader, `status`, `statusline` | Done |
 | 2 | Local Ollama pool; a recorded hold, move and launch (10 Nov) | Done |
 | 2 | Claude reading compared with the host display | Open |
-| 3 | Guide, README with two figures, limits, event log and local-lane pages, CI workflow files (first GitHub run pending) | Done |
-| 3 | Independent review, reader check, release runbook | Open |
+| 3 | Guide, README with two figures, limits, event log and local-lane pages, CI workflows, green on the first public run | Done |
+| 3 | Independent review, reader check, release runbook | Done |
 
-Target: release ready on 2026-11-11. This is an estimate, and each extra review round adds 1 to 2 hours.
-
-Scope of `v0.1.0`, set by the owner on 10 Nov 2026: the commands above, installed from a pinned git tag. Not in `v0.1.0`: `lock`, MCP, OpenCode and a PyPI package. All four come after the first release.
+Scope of `v0.1.0`, set by the owner on 10 Nov 2026: the commands above, installed from a pinned git tag. Not in `v0.1.0`: `lock`, MCP, OpenCode and a PyPI package. `v0.1.1` adds the PyPI package, published through Trusted Publishing; the other three come later.
 
 The release must show:
 
@@ -28,7 +26,6 @@ The release must show:
 - `lock`: rules signed with `ssh-keygen -Y`.
 - MCP server limited to `pick`, `report` and `override`.
 - OpenCode as a third host (pick only).
-- PyPI package through Trusted Publisher.
 - Hosted labeller and benchmark run.
 - Attempts and metered settlement for API pools.
 - Refreshed model evidence in place of the frozen model table.
